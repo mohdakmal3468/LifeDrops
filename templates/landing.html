@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LifeDrops | Meet the Visionaries</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ef4444;
+            --navy: #0f172a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--navy);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(30, 58, 138, 0.2) 0px, transparent 50%);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container { max-width: 1000px; text-align: center; }
+
+        /* --- HEADER --- */
+        .header-meta {
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 60px;
+            line-height: 1.6;
+        }
+
+        /* --- TEAM GRID --- */
+        .team-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 32px;
+            width: 320px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        /* Avatar Placeholder */
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-radius: 24px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        .role {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .bio {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* --- BUTTON --- */
+        .cta-box { margin-top: 80px; }
+
+        .btn-launch {
+            padding: 20px 45px;
+            background: #fff;
+            color: var(--navy);
+            text-decoration: none;
+            border-radius: 18px;
+            font-weight: 800;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-launch:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        @media(max-width: 768px){
+            .team-grid { flex-direction: column; align-items: center; }
+            .profile-card { width: 100%; }
+        }
+        .styled-link {
+            color: #2f7bd3;              /* red text */
+            text-decoration: none;       /* remove underline */
+            font-weight: bold;
+        }
+
+        .styled-link:hover {
+            color: #1c9bb7;              /* darker red on hover */
+            text-decoration: underline;  /* underline when hovered */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <span class="header-meta">The Minds Behind the LifeDrops</span>
+    <h1>Meet the <span>Architects</span></h1>
+    <p class="intro">We are a small team of engineers and designers dedicated to ensuring that in an emergency, the only thing you have to worry about is getting there.</p>
+
+    <div class="team-grid">
+        <div class="profile-card">
+            <div class="avatar">👨‍💻</div>
+            <span class="role">Lead Architect</span>
+            <div class="name">Mohd Akmal</div>
+            <p class="bio">Python Developer</p>
+
+        </div>
+
+        <div class="profile-card">
+            <div class="avatar">🎨</div>
+            <span class="role">Creative Director</span>
+            <div class="name">Kashifa Hasnain</div>
+            <p class="bio">UI & UX Designer</p>
+        </div>
+    </div>
+    <div>
+            <a href="mailto:mohammadakmal3468@gmail.com" class="styled-link">Email Us</a>
+    </div>
+
+    <div class="cta-box">
+        <a href="/app" class="btn-launch">
+            Launch Platform <span>🚀</span>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

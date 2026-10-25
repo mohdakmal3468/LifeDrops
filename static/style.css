@@ -1,0 +1,112 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.login-body, .form-body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.login-container, .form-container { max-width: 400px; width: 100%; }
+.login-card { 
+    background: white; 
+    padding: 40px; 
+    border-radius: 20px; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    text-align: center;
+}
+h1 { color: #333; margin-bottom: 10px; font-size: 2.5em; }
+p { color: #666; margin-bottom: 30px; }
+
+input, select { 
+    width: 100%; padding: 15px; margin: 10px 0; 
+    border: 2px solid #e1e5e9; border-radius: 10px; 
+    font-size: 16px; transition: all 0.3s;
+}
+input:focus, select:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
+
+button { 
+    width: 100%; padding: 15px; background: #667eea; 
+    color: white; border: none; border-radius: 10px; 
+    font-size: 16px; font-weight: 600; cursor: pointer;
+    transition: all 0.3s;
+}
+button:hover { background: #5a67d8; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102,126,234,0.3); }
+
+.register-link, .back-link { 
+    display: inline-block; margin-top: 20px; 
+    color: #667eea; text-decoration: none; font-weight: 500;
+}
+.register-link:hover, .back-link:hover { text-decoration: underline; }
+
+.dashboard { max-width: 800px; margin: 0 auto; }
+.header { 
+    background: white; padding: 20px 30px; 
+    border-radius: 15px; margin-bottom: 20px; 
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.logout { color: #f44336; text-decoration: none; font-weight: 600; }
+
+.card { 
+    background: white; padding: 25px; margin-bottom: 20px; 
+    border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.card h3 { margin-bottom: 20px; color: #333; font-size: 1.4em; }
+
+.button-group { display: flex; gap: 10px; margin: 15px 0; }
+button.sos { background: #f44336; flex: 1; }
+button.sos:hover { background: #d32f2f; }
+
+#results, .ai-output { 
+    min-height: 60px; padding: 15px; 
+    background: #f8f9ff; border-radius: 10px; 
+    margin-top: 15px; border-left: 4px solid #667eea;
+}
+.donor, .alert { 
+    padding: 10px; background: white; 
+    margin: 5px 0; border-radius: 8px; 
+    border-left: 3px solid #4caf50;
+}
+.sos-sent { color: #f44336; font-weight: bold; }
+.no-results { color: #666; }
+
+.alerts { position: fixed; bottom: 20px; right: 20px; width: 350px; }
+.alert { background: #ffebee; border-left-color: #f44336; animation: slideIn 0.3s; }
+@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+/* Add to existing CSS */
+.location-status {
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: #e3f2fd;
+    color: #1976d2;
+    font-size: 14px;
+    font-weight: 500;
+}
+.location-status.success {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+.locate-btn {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.locate-btn:hover {
+    background: #45a049;
+}
+.location-info {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.donor {
+    background: #e8f5e8;
+    border-left-color: #4caf50;
+}
+

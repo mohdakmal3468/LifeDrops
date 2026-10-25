@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LifeDrops | Patient Care Portal</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-soft: #eff6ff;
+            --emergency: #ef4444;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --bg: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
+
+        .dashboard { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+
+        /* --- HEADER --- */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand h1 { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
+        .logout { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-decoration: none; padding: 8px 16px; border-radius: 12px; transition: 0.3s; }
+        .logout:hover { background: #fee2e2; color: var(--emergency); }
+
+        /* --- SEARCH CARD --- */
+        .card { 
+            background: var(--white); 
+            padding: 32px; 
+            border-radius: 24px; 
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+            border: 1px solid #f1f5f9;
+        }
+        .card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+
+        .input-group { margin-bottom: 20px; }
+        .input-label { font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: block; }
+        .input-field { width: 100%; padding: 14px 18px; border-radius: 14px; border: 2px solid #f1f5f9; background: #f8fafc; font-size: 1rem; font-weight: 600; transition: 0.2s; outline: none; }
+        .input-field:focus { border-color: var(--primary); background: white; }
+
+        .button-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+        .btn { padding: 16px; border-radius: 14px; font-weight: 800; font-size: 0.95rem; cursor: pointer; border: none; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2); }
+        .btn-danger { background: white; color: var(--emergency); border: 2px solid #fee2e2; }
+        .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-danger:hover { background: #fee2e2; }
+
+        /* --- DONOR RESULTS --- */
+        .donor-card { 
+            background: #fff; border: 1px solid #f1f5f9; padding: 20px; border-radius: 20px; margin-bottom: 12px;
+            display: grid; grid-template-columns: 1fr auto; align-items: center; transition: 0.3s;
+        }
+        .donor-card:hover { border-color: var(--primary); transform: translateX(5px); }
+        .donor-name { font-weight: 800; font-size: 1.1rem; color: var(--text-main); }
+        .match-tag { font-size: 0.7rem; font-weight: 800; background: var(--primary-soft); color: var(--primary); padding: 4px 10px; border-radius: 100px; text-transform: uppercase; }
+        .donor-info { display: flex; gap: 15px; margin-top: 8px; font-size: 0.85rem; color: var(--text-muted); }
+        .donor-info b { color: var(--text-main); }
+
+        /* --- SOS & ALERTS --- */
+        .sos-active { background: #fff1f2; border: 2px solid #fecaca; padding: 24px; border-radius: 20px; text-align: center; }
+        .pulse { animation: pulse-red 2s infinite; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+
+        .alerts { position: fixed; bottom: 20px; right: 20px; width: 320px; z-index: 1000; }
+        .alert-item { background: var(--text-main); color: white; padding: 16px; border-radius: 16px; margin-top: 10px; font-size: 0.85rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* --- CHAT OVERLAY --- */
+#chat-box {
+    position: fixed; bottom: 80px; right: 20px; width: 350px; height: 450px;
+    background: white; border-radius: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+    display: none; flex-direction: column; z-index: 2000; border: 1px solid #e2e8f0;
+}
+.chat-header { padding: 15px; background: var(--primary); color: white; border-radius: 20px 20px 0 0; display: flex; justify-content: space-between; font-weight: 700; }
+.chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; }
+.msg { padding: 8px 12px; border-radius: 12px; max-width: 80%; }
+.msg.sent { align-self: flex-end; background: var(--primary-soft); color: var(--primary); }
+.msg.received { align-self: flex-start; background: #f1f5f9; color: var(--text-main); }
+.chat-input { padding: 15px; border-top: 1px solid #f1f5f9; display: flex; gap: 8px; }
+.chat-input input { flex: 1; border: none; background: #f8fafc; padding: 10px; border-radius: 10px; outline: none; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <div class="header">
+        <div class="brand">
+            <span style="font-size: 1.5rem;">💙</span>
+            <h1>LifeDrops <span style="font-weight: 400; color: var(--text-muted);">| Care</span></h1>
+        </div>
+        <a href="/" class="logout" onclick="localStorage.removeItem('user')">Sign Out</a>
+    </div>
+
+    <div class="card">
+        <h3>🔍 AI Donor Search</h3>
+        
+        <div class="input-group">
+            <label class="input-label">Required Blood Group</label>
+            <input id="bloodSearch" class="input-field" placeholder="e.g. A+, O-, B+" value="A+">
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">Patient Location</label>
+            <input id="locationSearch" class="input-field" placeholder="e.g. Kankarbagh Hospital" value="Kankarbagh, Patna">
+        </div>
+
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 24px; font-weight: 600;">
+            📍 <span id="gpsStatus">Detecting precise coordinates...</span>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="searchDonors()">
+                🔍 Find Nearest Donors
+            </button>
+            <button class="btn btn-danger" onclick="sendSOS()">
+                🚨 Emergency SOS
+            </button>
+        </div>
+
+        <div id="results" style="margin-top: 32px;"></div>
+    </div>
+</div>
+
+<div class="alerts" id="alerts"></div>
+
+<script>
+    // Keeping your core logic intact
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || user[2] !== 'Patient') {
+        window.location.href = '/login';
+    }
+
+    let currentLat = 25.5941; 
+    let currentLon = 85.1376;
+
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+            currentLat = pos.coords.latitude;
+            currentLon = pos.coords.longitude;
+            document.getElementById('gpsStatus').textContent = `GPS Active: ${currentLat.toFixed(4)}, ${currentLon.toFixed(4)}`;
+        },
+        () => {
+            document.getElementById('gpsStatus').textContent = `Using default location (Patna)`;
+        }
+    );
+
+    async function searchDonors() {
+        const blood = document.getElementById('bloodSearch').value.trim();
+        const location = document.getElementById('locationSearch').value.trim();
+        
+        if (!blood) { alert('Enter blood group'); return; }
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `<div style="text-align:center; padding:20px;"><div style="width:30px; height:30px; border:3px solid #f1f5f9; border-top-color:var(--primary); border-radius:50%; animation:spin 0.8s linear infinite; margin:auto;"></div></div>`;
+
+        try {
+            const res = await fetch('/api/donors', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams({ blood, location, lat: currentLat, lon: currentLon })
+            });
+            const data = await res.json();
+            
+            if (data.donors && data.donors.length > 0) {
+                resultsDiv.innerHTML = data.donors.map((d, index) => `
+                    // ... inside searchDonors() mapping ...
+<div class="donor-card">
+    <div>
+        <div class="donor-name">${d.name}</div>
+        <div class="donor-info">
+            <span>📍 <b>${d.location}</b></span>
+            <span>⭐ <b>${d.credits}</b> Credits</span>
+        </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+        <span class="match-tag" style="text-align:center;">Rank #${index + 1}</span>
+        <button class="btn btn-primary" style="padding: 8px 12px; font-size: 0.8rem;" 
+                onclick="openChat(${d.id}, '${d.name}')">💬 Chat</button>
+    </div>
+</div>
+                `).join('');
+            } else {
+                resultsDiv.innerHTML = `<p style="text-align:center; color:var(--text-muted);">No donors found in this area.</p>`;
+            }
+        } catch (e) { resultsDiv.innerHTML = `<p style="color:var(--emergency);">Connection error.</p>`; }
+    }
+
+    async function sendSOS() {
+        const blood = document.getElementById('bloodSearch').value.trim();
+        if (!blood) { alert('Select blood group for SOS'); return; }
+
+        const sosMsg = `🚨 EMERGENCY: ${user[1]} needs ${blood} blood at ${document.getElementById('locationSearch').value}`;
+        
+        try {
+            await fetch('/api/alert', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams({ message: sosMsg })
+            });
+            document.getElementById('results').innerHTML = `
+                <div class="sos-active pulse">
+                    <h2 style="color:var(--emergency); margin-bottom:10px;">SOS BROADCASTED</h2>
+                    <p>Nearby donors have been notified via the global alert system.</p>
+                </div>`;
+        } catch (e) { alert("SOS Failed"); }
+    }
+
+    async function updateAlerts() {
+        try {
+            const res = await fetch('/api/alerts');
+            const data = await res.json();
+            const alertsDiv = document.getElementById('alerts');
+            if (data.alerts && data.alerts.length > 0) {
+                alertsDiv.innerHTML = data.alerts.map(a => `<div class="alert-item"><b>Global Alert:</b> ${a.msg}</div>`).join('');
+            }
+        } catch (e) {}
+    }
+    setInterval(updateAlerts, 5000);
+    let socket = null;
+
+async function openChat(donorId, donorName) {
+    const requestId = "req" + Math.floor(Math.random() * 1000); // Temporary session ID
+    const res = await fetch('/api/chat-room', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({ donor_id: donorId, request_id: requestId })
+    });
+    const data = await res.json();
+
+    document.getElementById('chat-box').style.display = 'flex';
+    document.getElementById('chat-with-name').textContent = donorName;
+    
+    // Connect WebSocket
+    if (socket) socket.close();
+    socket = new WebSocket(data.ws_url);
+
+    socket.onmessage = (event) => {
+        const msgData = JSON.parse(event.data);
+        const div = document.createElement('div');
+        div.className = `msg ${msgData.sender === user[1] ? 'sent' : 'received'}`;
+        div.textContent = msgData.message;
+        document.getElementById('chat-msgs').appendChild(div);
+    };
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    if (input.value && socket) {
+        socket.send(JSON.stringify({ message: input.value, sender: user[1] }));
+        input.value = '';
+    }
+}
+</script>
+
+   <div id="chat-box">
+    <div class="chat-header">
+        <span id="chat-with-name">Chat</span>
+        <span style="cursor:pointer" onclick="document.getElementById('chat-box').style.display='none'">✕</span>
+    </div>
+    <div class="chat-messages" id="chat-msgs"></div>
+    <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type a message...">
+        <button onclick="sendMessage()" style="border:none; background:none; cursor:pointer;">🚀</button>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+

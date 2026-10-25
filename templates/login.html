@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LifeDrops | Secure Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --deep-slate: #0f172a;
+            --text-muted: #64748b;
+            --error: #ef4444;
+            --bg-body: #f8fafc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(239, 68, 68, 0.05) 0px, transparent 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            padding: 48px 40px;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid #f1f5f9;
+            text-align: center;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-area {
+            margin-bottom: 32px;
+        }
+
+        .logo-area h1 {
+            color: var(--deep-slate);
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-area p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .input-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: block;
+            padding-left: 4px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            background: #f8fafc;
+            border: 2px solid #f1f5f9;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--deep-slate);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: var(--deep-slate);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
+        }
+
+        button:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.2);
+        }
+
+        button:active { transform: translateY(0); }
+
+        .error {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 16px;
+            font-weight: 600;
+            min-height: 1.2em;
+        }
+
+        .footer-links {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--primary); }
+
+        .register-link {
+            color: var(--primary) !important;
+            margin-bottom: 12px;
+            display: block !important;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="logo-area">
+        <h1><span>🩸</span> LifeDrops</h1>
+        <p>Enter your credentials to access the hub</p>
+    </div>
+
+    <form id="loginForm">
+        <div class="input-wrapper">
+            <label class="input-label">Identity</label>
+            <input type="text" id="name" placeholder="Username or Name" required>
+        </div>
+        
+        <div class="input-wrapper">
+            <label class="input-label">Security Key</label>
+            <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit">Access Account</button>
+    </form>
+
+    <p id="error" class="error"></p>
+
+    <div class="footer-links">
+        <a href="/register" class="register-link">Create new account</a>
+        <a href="/">← Return to Home</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginForm').onsubmit = async e => {
+        e.preventDefault();
+        const errorEl = document.getElementById('error');
+        errorEl.textContent = ""; // Reset error
+        
+        const [name, password] = [
+            document.getElementById('name').value, 
+            document.getElementById('password').value
+        ];
+
+        try {
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams({name, password})
+            });
+            const data = await res.json();
+            
+            if(data.success) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+                window.location.href = data.dashboard;
+            } else {
+                errorEl.textContent = data.error;
+            }
+        } catch (err) {
+            errorEl.textContent = "Connection failed. Please try again.";
+        }
+    }
+</script>
+
+</body>
+</html>
+
+

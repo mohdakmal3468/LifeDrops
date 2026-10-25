@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LifeDrops | The Future of Donation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ef4444;
+            --primary-soft: #fef2f2;
+            --deep-slate: #0f172a;
+            --text-muted: #64748b;
+            --bg-body: #f8fafc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: radial-gradient(#e2e8f0 0.8px, transparent 0.8px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            color: var(--deep-slate);
+        }
+
+        /* --- STICKY NAV --- */
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--deep-slate);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.03em;
+        }
+
+        .logo span { color: var(--primary); }
+
+        .signup-btn {
+            background: var(--deep-slate);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .signup-btn:hover {
+            background: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.3);
+        }
+
+        /* --- HERO SECTION --- */
+        .main-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .notebook-hero {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: 0 40px 100px -20px rgba(15, 23, 42, 0.08);
+            border: 1px solid #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle Background Glow */
+        .notebook-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            color: var(--deep-slate);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.05em;
+        }
+
+        .hero-title span {
+            background: linear-gradient(to right, #ef4444, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* --- CTA GROUP --- */
+        .cta-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-group {
+            display: flex;
+            background: #f1f5f9;
+            padding: 8px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 460px;
+            border: 1px solid #e2e8f0;
+            transition: focus-within 0.3s;
+        }
+
+        .input-group:focus-within {
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
+        .input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            outline: none;
+            color: var(--deep-slate);
+        }
+
+        .input-group button {
+            padding: 14px 28px;
+            background: var(--deep-slate);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .input-group button:hover {
+            background: var(--primary);
+        }
+
+        .secondary-link {
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .secondary-link:hover { color: var(--primary); }
+
+        /* --- BADGE SECTION --- */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+            opacity: 0.6;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item strong { display: block; font-size: 1.2rem; color: var(--deep-slate); }
+        .stat-item span { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; }
+
+        @media(max-width: 768px){
+            .notebook-hero { padding: 60px 24px; border-radius: 30px; }
+            .stats-row { flex-direction: column; gap: 20px; }
+        }
+        .fact-container {
+        margin-bottom: 48px;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .fact-label {
+        display: inline-block;
+        background: var(--primary-soft);
+        color: var(--primary);
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 12px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo"><span>🩸</span> LifeDrops</div>
+    <a href="/register" class="signup-btn">Get Started</a>
+</div>
+
+<div class="main-content">
+    <div class="notebook-hero">
+        <h1 class="hero-title">Find Blood Donors <span>Instantly</span></h1>
+        <div class="fact-container">
+    <span class="fact-label">Did you know?</span>
+        <p id="bloodFact" class="hero-subtitle">
+            Loading life-saving fact...
+        </p>
+    </div>
+
+        <div class="cta-section">
+            <div class="input-group">
+                <input type="email" placeholder="Enter your email to join...">
+                <button>Continue</button>
+            </div>
+            
+            <div style="font-size: 0.8rem; font-weight: 800; color: #cbd5e1; letter-spacing: 0.1em;">OR</div>
+            
+            <a href="/register" class="secondary-link">Create a Mission Profile →</a>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-item">
+                <strong>10k+</strong>
+                <span>Verified Donors</span>
+            </div>
+            <div class="stat-item">
+                <strong>2ms</strong>
+                <span>Match Latency</span>
+            </div>
+            <div class="stat-item">
+                <strong>100%</strong>
+                <span>Hospital Verified</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    const bloodFacts = [
+        "A single donation can save up to three lives.",
+        "One pint of blood can be separated into red cells, plasma, and platelets.",
+        "The average adult has about 10 units of blood in their body.",
+        "Every two seconds, someone in the world needs a blood transfusion.",
+        "O-negative blood is the universal donor and can be given to any blood type.",
+        "Blood makes up about 7% of your total body weight.",
+        "Donating blood burns roughly 650 calories per pint donated.",
+        "There are about 1 billion red blood cells in every two to three drops of blood.",
+        "Only about 3% of the eligible population donates blood each year.",
+        "AB-positive is known as the universal recipient of blood products."
+    ];
+
+    function rotateFact() {
+        const factElement = document.getElementById('bloodFact');
+        // Pick a random index from the array
+        const randomIndex = Math.floor(Math.random() * bloodFacts.length);
+        // Update the text
+        factElement.textContent = bloodFacts[randomIndex];
+    }
+
+    // Run the function when the page loads
+    window.onload = rotateFact;
+</script>
+</html>
+
